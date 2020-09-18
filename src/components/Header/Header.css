@@ -1,0 +1,109 @@
+@import '../variables.css';
+
+.root {
+  background: var(--org-darkblue);
+  color: #fff;
+  z-index: 410;
+  transform: translateY(0);
+  opacity: 1;
+  transition: transform 200ms ease, opacity 200ms ease;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  will-change: transform;
+
+  .logoText {
+    margin-top: 5px;
+    margin-left: 8px;
+
+    @media (--lt-small-phone) {
+      display: none;
+    }
+  }
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--height-header);
+}
+
+.logoContainer {
+  margin-right: 20px;
+  outline: 0;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+
+  svg {
+    path {
+      fill: white;
+    }
+  }
+}
+
+.control {
+  position: relative;
+  display: flex;
+  margin-left: auto;
+  align-items: center;
+  height: 39px;
+  outline: none;
+}
+
+.controlAction {
+  text-decoration: none;
+  font-weight: normal;
+  white-space: nowrap;
+  font-size: 15px;
+  color: white;
+  margin-left: 10px;
+  padding: 0 30px;
+  cursor: pointer;
+  outline: none;
+  line-height: 1.5;
+  display: flex;
+  align-items: center;
+  height: 100%;
+
+  &:hover {
+    text-decoration: underline;
+    color: white !important;
+  }
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 16px;
+  transition: all 100ms ease;
+  outline: none;
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+  box-sizing: border-box;
+  height: 40px;
+  min-width: 0;
+  font-size: 15px;
+  line-height: 20px;
+  padding-left: 16px;
+  padding-right: 16px;
+  border-radius: 10px;
+  background-color: var(--org-teal);
+  color: white;
+
+  &[disabled] {
+    cursor: default;
+  }
+
+  &:not(:disabled):hover {
+    color: white !important;
+    background-color: var(--org-teal-darken);
+  }
+}

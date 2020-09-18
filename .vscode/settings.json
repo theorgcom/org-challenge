@@ -1,0 +1,14 @@
+{
+  "emmet.includeLanguages": {
+    "postcss": "css"
+  },
+  "emmet.syntaxProfiles": {
+    "postcss": "css"
+  },
+  "files.associations": {
+    "*.css": "postcss"
+  },
+  "editor.tabSize": 2,
+  "window.zoomLevel": 0,
+  "editor.formatOnSave": true
+}

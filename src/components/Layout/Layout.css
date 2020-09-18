@@ -1,0 +1,13 @@
+@import '../variables.css';
+
+.root {
+  font-family: var(--font-family-base);
+  a {
+    text-decoration: none;
+
+    /* target all anchors and turn them cta color on hover */
+    &:hover {
+      color: var(--org-teal);
+    }
+  }
+}

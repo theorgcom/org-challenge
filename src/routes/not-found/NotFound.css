@@ -1,0 +1,22 @@
+@import '../../components/variables.css';
+
+.container {
+  margin: 0 auto;
+  max-width: var(--max-content-width);
+  box-sizing: content-box;
+
+  > * {
+    box-sizing: border-box;
+  }
+
+  h1 {
+    margin-top: calc(var(--height-header) + 60px);
+  }
+
+  img {
+    width: 500px;
+    @media (--lt-tablet) {
+      width: 100%;
+    }
+  }
+}

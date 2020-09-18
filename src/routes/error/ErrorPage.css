@@ -1,0 +1,73 @@
+@import '../../components/variables.css';
+
+/*
+ * Base styles
+ * ========================================================================== */
+html {
+  color: var(--black);
+  font-weight: 400;
+  font-size: 14px;
+  font-family: var(--font-family-base);
+  line-height: 1.375; /* ~22px */
+  letter-spacing: 0.0125em;
+}
+
+html,
+body,
+main {
+  height: 100%;
+  margin: 0;
+}
+
+a {
+  color: #0074c2;
+}
+
+/*
+ * Page specific styles
+ * ========================================================================== */
+
+h1 {
+  font-weight: 400;
+  color: white;
+  text-align: center;
+}
+
+pre {
+  white-space: pre-wrap;
+  text-align: left;
+  color: white;
+}
+
+section {
+  height: 100vh;
+  margin: 0 auto;
+  max-width: var(--max-content-width);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  h1 {
+    margin: 0;
+  }
+
+  a {
+    text-decoration: none;
+    color: white;
+    font-size: 24px;
+    font-weight: 500;
+    align-items: center;
+    margin-bottom: 50px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  img {
+    margin-bottom: 5px;
+  }
+
+  p {
+    color: white;
+  }
+}

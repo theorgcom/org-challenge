@@ -1,0 +1,12 @@
+[ignore]
+.*/node_modules/stylelint/.*
+
+[include]
+
+[libs]
+./flow-typed/
+
+[options]
+module.name_mapper.extension='graphql' -> 'empty/object'
+# module.name_mapper.extension='css' -> 'css-module-flow'
+module.name_mapper='^@app' -> '<PROJECT_ROOT>/src'

@@ -1,0 +1,6 @@
+{
+  "name": "max-width-container",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./MaxWidthContainer.js"
+}

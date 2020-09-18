@@ -1,0 +1,83 @@
+:root {
+  /*
+   * Typography
+   * ======================================================================== */
+
+  --font-family-base: Helvetica, Arial, sans-serif;
+  --font-family-news: Georgia, Times, 'Times New Roman', serif;
+
+  /*
+   * Layout
+   * ======================================================================== */
+
+  --max-content-width: 1024px;
+  --height-header: 64px;
+  --height-footer: 240px;
+  --height-footer-tablet: 160px;
+  --padding-bottom-layout: 50px;
+  --padding-bottom-layout-mobile: 50px;
+
+  /*
+   * Media queries breakpoints
+   * ======================================================================== */
+
+  --screen-xs-min: 480px; /* Extra small screen / phone */
+  --screen-sm-min: 768px; /* Small screen / tablet */
+  --screen-md-min: 992px; /* Medium screen / desktop */
+  --screen-lg-min: 1200px; /* Large screen / wide desktop */
+
+  /*
+   * Colors
+   * ======================================================================== */
+
+  /* 2020 update */
+
+  /* The Org brand colors */
+  --org-darkblue: #1a2b42;
+  --org-teal: #4499bf;
+  --org-teal-darken: color(var(--org-teal) l(45%) s(45%));
+  --org-teal-lighten: color(var(--org-teal) l(95%) s(80%));
+
+  /* Neutral colors */
+  --background-grey: #f8f7f8;
+  --light-grey: #ebebeb;
+  --medium-grey: #b1b1b1;
+  --dark-grey: #767676;
+
+  /* Utility colors */
+  --black: #000;
+  --white: #fff;
+  --warning-red: #de1830;
+  --warning-yellow: #ffb818;
+
+  /* Depth */
+  --card-box-shadow: 0 0 1px rgba(0, 0, 0, 0.04), 0 4px 8px rgba(0, 0, 0, 0.04),
+    0 8px 16px rgba(0, 0, 0, 0.04), 0 16px 24px rgba(0, 0, 0, 0.04);
+
+  /*
+   * Animations
+   * ======================================================================== */
+  --transition-01: cubic-bezier(0.19, 1, 0.22, 1);
+
+  @custom-media --small-phone (width <= 374px);
+  @custom-media --phone (374px < width <= 480px);
+  @custom-media --tablet (480px < width <= 768px);
+  @custom-media --desktop (768px < width <= 992px);
+  @custom-media --wide-desktop (992px < width <= 1200px);
+  @custom-media --lt-small-phone (width < 374px);
+  @custom-media --lt-phone (width < 480px);
+  @custom-media --lt-tablet (width < 768px);
+  @custom-media --lt-desktop (width < 992px);
+  @custom-media --lt-wide-desktop (width < 1200px);
+
+  @custom-media --tablet-and-up (width >= 768px);
+  @custom-media --desktop-and-up (width >= 992px);
+  @custom-media --desktop-lg-and-up (width >= 1200px);
+
+  @custom-media --bp-xs-phone (width < 374px);
+  @custom-media --bp-phone (width < 768px);
+  @custom-media --lg-phone (480px < width <= 768px);
+  @custom-media --bp-tablet (width >= 768px);
+  @custom-media --bp-desktop (width > 992px);
+  @custom-media --bp-desktop-lg (width > 1200px);
+}
