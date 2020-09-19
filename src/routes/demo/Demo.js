@@ -14,7 +14,9 @@ const Demo = (
   { brands, brandsLoading }: Props, // eslint-disable-line
 ) => (
   /* console.log('This is the data from the brands "service"',brands); */
-  <section className={s.one}>{/* ... */}</section>
+  <div className={s.wrapper}>
+    <section>{/* ... */}</section>
+  </div>
 );
 
 export default withStyles(s)(Demo);

@@ -1,13 +1,40 @@
 @import '../variables.css';
 
-.root {
-  font-family: var(--font-family-base);
-  a {
-    text-decoration: none;
+/*
+ * Base styles
+ * ========================================================================== */
 
-    /* target all anchors and turn them cta color on hover */
-    &:hover {
-      color: var(--org-teal);
-    }
+html {
+  color: var(--black);
+  font-size: 14px;
+  font-family: var(--font-family-base);
+  line-height: 1.375; /* ~22px */
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+
+  /* -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility; */
+}
+
+body {
+  margin: 0;
+  background-color: var(--white);
+  -webkit-tap-highlight-color: transparent;
+  overflow-x: hidden;
+}
+
+a {
+  color: var(--black);
+  text-decoration: none;
+
+  /* target all anchors and turn them cta color on hover */
+  &:hover {
+    color: var(--org-teal);
   }
+}
+
+.root {
+  position: relative;
 }
