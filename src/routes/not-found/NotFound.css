@@ -4,6 +4,9 @@
   margin: 0 auto;
   max-width: var(--max-content-width);
   box-sizing: content-box;
+  height: 100%;
+  padding-top: var(--height-header);
+  min-height: calc(100vh - var(--height-header));
 
   > * {
     box-sizing: border-box;
