@@ -4,16 +4,15 @@ This repo is a light version of the [TheOrg](https://theorg.com) web app.
 
 ## The challenge
 
-- Look at the supplied Figma design 🌄, you might need to sign up to inspect the various design elements and get CSS hints
-- The design has 5 different sections. The challenge is to select 2 or 3 of the sections in the design and build them into the web app as best as possible using the [Demo.js](./src/routes/demo/Demo.js) and [Demo.css](./src/routes/demo/Demo.css) files.
+- Look at [the supplied Figma design](https://www.figma.com/file/wiWRVlKWuY4itW89sYnhzy/Code-Challenge%3A-Splash-Page?node-id=0%3A1) 🌄, you might need to sign up to inspect the various design elements and get CSS hints
+- The challenge is to build the desgin into the web app as best as possible. The [Demo.tsx](./src/routes/demo/Demo.tsx) file can be used as a starting point.
 
 _The challenge should not take more than 3-4 hours._
 
 #### It's worth noting that:
 
-- Everything can be done in the Demo files listed above, but to make the code more readable you're very welcome to split out the layout and add additional supporting components in the [./components](./src/components) folder.
-- The illustrations and assets in the design are included [here](./src/routes/demo/assets). They can however be exported from Figma again if other formats or sizes are required.
-- Data for Section 2 (Join these transparent brands) is included as a prop on the Demo component.
+- Everything can be done with the supplied files, but to make the code more readable you're very welcome to split out the layout and add additional supporting components in the [./components](./src/components) folder.
+- The data for the brands is supplied via an Apollo graphql hook that can be imported as: `import { useAllBrandsQuery } from '@app/apollo/types';`.
 
 ## Getting started
 
@@ -30,7 +29,7 @@ in [package.json](./package.json) file.
 
 This command will build the app from the source files (`/src`) into the output
 `/build` folder. As soon as the initial build completes, it will start the
-Node.js server (`node build/server.js`) and [Browsersync](https://browsersync.io/)
+Node.js server (`node build/server.tsx`) and [Browsersync](https://browsersync.io/)
 with [HMR](https://webpack.github.io/docs/hot-module-replacement) on top of it.
 
 #### 4. Run `npm run lint`
@@ -43,4 +42,4 @@ Remove the `./node_modules` and `./build` files if present and send the project 
 
 ## Any questions or problems
 
-Don't hesitate to contact andreas@theorg.com ✌️
+Don't hesitate to contact us with any questions ✌️
