@@ -1,0 +1,13 @@
+# humanstxt.org/
+# The humans responsible & technology colophon
+
+/* TEAM */
+
+  Christian Wylonis -- CEO -- @cwylonis
+  Andreas Jarbol -- CTO -- @ajarbol
+
+/* TECHNOLOGY COLOPHON */
+
+  DEVOPS: AWS suite
+  UI: React + Node
+  API: Scala + GraphQL

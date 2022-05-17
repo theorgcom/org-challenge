@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+
 const path = require('path');
 const webpack = require('webpack');
 const AssetsPlugin = require('assets-webpack-plugin');
@@ -6,13 +8,17 @@ const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const overrideRules = require('./lib/overrideRules');
 const pkg = require('../package.json');
+const Dotenv = require('dotenv-webpack');
+const LoadablePlugin = require('@loadable/webpack-plugin');
+
+const { BugsnagSourceMapUploaderPlugin } = require('webpack-bugsnag-plugins');
 
 const isDebug = !process.argv.includes('--release');
 const isVerbose = process.argv.includes('--verbose');
 const isAnalyze =
   process.argv.includes('--analyze') || process.argv.includes('--analyse');
 
-const reScript = /\.m?jsx?$/;
+const reScript = /\.(m?jsx?|tsx?)$/;
 const reGraphql = /\.(graphql|gql)$/;
 const reStyle = /\.(css|less|scss|sss)$/;
 const reImage = /\.(bmp|gif|jpe?g|png|svg)$/;
@@ -20,6 +26,9 @@ const reFont = /\.(ttf|woff|woff2)$/;
 const staticAssetName = isDebug
   ? '[path][name].[ext]?[hash:8]'
   : '[hash:8].[ext]';
+
+const version = `${pkg.version}+${process.env.CODEBUILD_BUILD_NUMBER || '1'}`;
+const publicPathPrefix = process.env.PUBLIC_PATH_PREFIX || '';
 
 //
 // Common configuration chunk to be used for both
@@ -33,7 +42,7 @@ const config = {
 
   output: {
     path: path.resolve(__dirname, '../build/public/assets'),
-    publicPath: '/assets/',
+    publicPath: `${publicPathPrefix}/assets/`,
     pathinfo: isVerbose,
     filename: isDebug ? '[name].js' : '[name].[chunkhash:8].js',
     chunkFilename: isDebug ? '[name].js' : '[name].[chunkhash:8].js',
@@ -48,6 +57,7 @@ const config = {
     alias: {
       '@app': path.resolve(__dirname, '../src'),
     },
+    extensions: ['.mjs', '.ts', '.tsx', '.jsx', '.js'],
   },
 
   module: {
@@ -60,21 +70,25 @@ const config = {
         test: reScript,
         include: [
           path.resolve(__dirname, '../src'),
-          // bullet-train-client only supports an ES6 bundle, so we need to transpile
-          path.resolve(__dirname, '../node_modules/bullet-train-client'),
+          path.resolve(__dirname, '../node_modules/parse5'),
+          path.resolve(__dirname, '../node_modules/react-markdown'),
+          path.resolve(__dirname, '../node_modules/striptags'),
         ],
+
         loader: 'babel-loader',
+
         options: {
           // https://github.com/babel/babel-loader#options
           cacheDirectory: isDebug,
 
           // https://babeljs.io/docs/usage/options/
           babelrc: false,
+          compact: !isDebug,
           presets: [
             // A Babel preset that can automatically determine the Babel plugins and polyfills
             // https://github.com/babel/babel-preset-env
             [
-              'env',
+              '@babel/env',
               {
                 targets: {
                   browsers: pkg.browserslist,
@@ -85,25 +99,41 @@ const config = {
                 debug: false,
               },
             ],
-            // Experimental ECMAScript proposals
-            // https://babeljs.io/docs/plugins/#presets-stage-x-experimental-presets-
-            'stage-2',
-            // https://babeljs.io/docs/en/babel-preset-flow
-            'flow',
-            // JSX
-            // https://github.com/babel/babel/tree/master/packages/babel-preset-react
-            'react',
-            // Optimize React code for the production build
-            // https://github.com/thejameskyle/babel-react-optimize
-            ...(isDebug ? [] : ['react-optimize']),
+            '@babel/preset-react',
+            '@babel/preset-typescript',
           ],
           plugins: [
             // Adds component stack to warning messages
-            // https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-react-jsx-source
-            ...(isDebug ? ['transform-react-jsx-source'] : []),
+            // https://github.com/babel/babel/tree/master/packages/babel-plugin-@babel/transform-react-jsx-source
+            ...(isDebug ? ['@babel/transform-react-jsx-source'] : []),
             // Adds __self attribute to JSX which React will use for some warnings
             // https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-react-jsx-self
-            ...(isDebug ? ['transform-react-jsx-self'] : []),
+            ...(isDebug ? ['@babel/transform-react-jsx-self'] : []),
+            '@babel/plugin-syntax-dynamic-import',
+            '@babel/plugin-syntax-import-meta',
+            '@babel/plugin-proposal-class-properties',
+            '@babel/plugin-proposal-json-strings',
+            '@loadable/babel-plugin',
+            [
+              '@babel/plugin-proposal-decorators',
+              {
+                legacy: true,
+              },
+            ],
+            '@babel/plugin-proposal-function-sent',
+            '@babel/plugin-proposal-export-namespace-from',
+            '@babel/plugin-proposal-numeric-separator',
+            '@babel/plugin-proposal-throw-expressions',
+            '@babel/plugin-proposal-optional-chaining',
+            ...(!isDebug
+              ? [
+                  [
+                    'react-remove-properties',
+                    { properties: ['data-testid', 'data-e2e-id'] },
+                  ],
+                ]
+              : []),
+            ['styled-components', { ssr: true, displayName: isDebug }],
           ],
         },
       },
@@ -194,6 +224,7 @@ const config = {
       // Rules for images
       {
         test: reImage,
+        exclude: [path.resolve(__dirname, '../src/icons')],
         oneOf: [
           // Inline lightweight images into CSS
           {
@@ -231,16 +262,20 @@ const config = {
         ],
       },
 
+      // SVG icons as react components
+      {
+        test: /\.svg$/,
+        exclude: /node_modules/,
+        include: [path.resolve(__dirname, '../src/icons')],
+        use: {
+          loader: 'svg-react-loader',
+        },
+      },
+
       // Convert plain text into JS module
       {
         test: /\.txt$/,
         loader: 'raw-loader',
-      },
-
-      // Convert Markdown into HTML
-      {
-        test: /\.md$/,
-        loader: path.resolve(__dirname, './lib/markdown-loader.js'),
       },
 
       // Return public URL for all assets unless explicitly excluded
@@ -296,10 +331,6 @@ const config = {
     timings: true,
     version: isVerbose,
   },
-
-  // Choose a developer tool to enhance debugging
-  // https://webpack.js.org/configuration/devtool/#devtool
-  devtool: isDebug ? 'cheap-module-inline-source-map' : 'source-map',
 };
 
 //
@@ -313,7 +344,7 @@ const clientConfig = {
   target: 'web',
 
   entry: {
-    client: ['./tools/polyfills.js', './src/client.js'],
+    client: ['./tools/polyfills.js', './src/client.tsx'],
   },
 
   optimization: {
@@ -352,7 +383,9 @@ const clientConfig = {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': isDebug ? '"development"' : '"production"',
       'process.env.BROWSER': true,
+      __VERSION__: `"${version}"`,
       __DEV__: isDebug,
+      __PATH_PREFIX__: `"${publicPathPrefix}"`,
     }),
 
     // Emit a file with assets paths
@@ -363,9 +396,26 @@ const clientConfig = {
       prettyPrint: true,
     }),
 
+    new LoadablePlugin({
+      writeToDisk: {
+        filename: path.resolve(__dirname, '../build'),
+      },
+    }),
+
     // Webpack Bundle Analyzer
     // https://github.com/th0r/webpack-bundle-analyzer
     ...(isAnalyze ? [new BundleAnalyzerPlugin()] : []),
+    // https://docs.bugsnag.com/build-integrations/webpack/
+    ...(process.env.BUGSNAG_CLIENT_API_KEY
+      ? [
+          new BugsnagSourceMapUploaderPlugin({
+            apiKey: process.env.BUGSNAG_CLIENT_API_KEY,
+            appVersion: version,
+            overwrite: true,
+            publicPath: 'https://*theorg.com/assets',
+          }),
+        ]
+      : []),
   ],
 
   // Some libraries import Node modules but don't use them in the browser.
@@ -377,6 +427,9 @@ const clientConfig = {
     net: 'empty',
     tls: 'empty',
   },
+  // Choose a developer tool to enhance debugging
+  // https://webpack.js.org/configuration/devtool/#devtool
+  devtool: isDebug ? 'eval-cheap-module-source-map' : 'hidden-source-map',
 };
 
 //
@@ -390,7 +443,7 @@ const serverConfig = {
   target: 'node',
 
   entry: {
-    server: ['./tools/polyfills.js', './src/server.js'],
+    server: ['./tools/polyfills.js', './src/server.tsx'],
   },
 
   output: {
@@ -446,7 +499,7 @@ const serverConfig = {
           options: {
             ...rule.options,
             name: `public/assets/${rule.options.name}`,
-            publicPath: url => url.replace(/^public/, ''),
+            publicPath: url => url.replace(/^public/, publicPathPrefix),
           },
         };
       }
@@ -462,6 +515,10 @@ const serverConfig = {
     }),
   ],
 
+  /* optimization: {
+    minimize: false,
+  }, */
+
   plugins: [
     new webpack.optimize.LimitChunkCountPlugin({
       maxChunks: 1,
@@ -471,7 +528,9 @@ const serverConfig = {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': isDebug ? '"development"' : '"production"',
       'process.env.BROWSER': false,
+      __VERSION__: `"${version}"`,
       __DEV__: isDebug,
+      __PATH_PREFIX__: `"${publicPathPrefix}"`,
     }),
 
     // Adds a banner to the top of each generated chunk
@@ -481,6 +540,8 @@ const serverConfig = {
       raw: true,
       entryOnly: false,
     }),
+
+    ...(isDebug ? [new Dotenv()] : []),
   ],
 
   // Do not replace node globals with polyfills
@@ -493,6 +554,26 @@ const serverConfig = {
     __filename: false,
     __dirname: false,
   },
+  // Choose a developer tool to enhance debugging
+  // https://webpack.js.org/configuration/devtool/#devtool
+  devtool: isDebug ? 'eval-cheap-module-source-map' : 'source-map',
 };
 
-module.exports = [clientConfig, serverConfig];
+//
+// Configuration for the lambda bundle (lambda.js)
+// -----------------------------------------------------------------------------
+
+const lambdaConfig = {
+  ...serverConfig,
+
+  name: 'lambda',
+
+  entry: {
+    lambda: ['./tools/polyfills.js', './src/lambda.js'],
+  },
+};
+
+module.exports = [
+  clientConfig,
+  process.argv.includes('--lambda') ? lambdaConfig : serverConfig,
+];

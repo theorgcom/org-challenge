@@ -1,4 +1,4 @@
-# Frontend Development Challenge
+# Frontend Code Challenge
 
 This repo is a light version of the [TheOrg](https://theorg.com) web app.
 
@@ -40,12 +40,6 @@ This will ensure that there are no javascript or css errors in the project.
 #### 5. Submit your work
 
 Remove the `./node_modules` and `./build` files if present and send the project as a zip file.
-
-#### Note about Flowtypes and VSCode
-
-_For the peeps using VSCode as editor._
-The project uses [Flowtypes]() and in order to not conflict with the builtin Typescript plugins of VSCode
-please follow [this](https://marketplace.visualstudio.com/items?itemName=flowtype.flow-for-vscode) guide to enable it.
 
 ## Any questions or problems
 

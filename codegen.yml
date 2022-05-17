@@ -1,0 +1,18 @@
+overwrite: true
+schema: 'http://localhost:3000/graphql'
+documents: 'src/apollo/**/!(types).ts'
+generates:
+  src/apollo/types.ts:
+    config:
+      ignoreEnumValuesFromSchema: true
+      scalars:
+        UUID: string
+        LocalDateTime: string
+        DateTimeZone: string
+        PINNumber: string
+        Long: number
+        LocalDate: string
+    plugins:
+      - 'typescript'
+      - 'typescript-operations'
+      - 'typescript-react-apollo'

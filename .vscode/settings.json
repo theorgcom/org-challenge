@@ -9,6 +9,5 @@
     "*.css": "postcss"
   },
   "editor.tabSize": 2,
-  "window.zoomLevel": 0,
   "editor.formatOnSave": true
 }

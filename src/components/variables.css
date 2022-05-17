@@ -3,61 +3,130 @@
    * Typography
    * ======================================================================== */
 
-  --font-family-base: Helvetica, Arial, sans-serif;
-  --font-family-news: Georgia, Times, 'Times New Roman', serif;
+  --font-primary: 'Basis Grotesque Pro', 'HelveticaNeue', sans-serif;
+  --font-secondary: 'DM Serif Text', 'Georgia', serif;
+
+  /* Type scale */
+
+  /* Core sizes */
+  --fs-1: 12px;
+  --fs-1-5: 13px;
+  --fs-2: 14px;
+  --fs-2-5: 15px;
+  --fs-3: 16px;
+  --fs-4: 18px;
+  --fs-4-5: 20px;
+  --fs-5: 22px;
+  --fs-6: 24px;
+  --fs-7: 28px;
+  --fs-8: 32px;
+  --fs-9: 36px;
+  --fs-10: 40px;
+
+  /* Landingpage sizes */
+  --fs-11: 50px;
+  --fs-12: 60px;
+  --fs-13: 68px;
+  --fs-14: 76px;
+
+  /* Core line heights */
+  --lh-1: 1;
+  --lh-2: 1.25;
+  --lh-3: 1.5;
 
   /*
-   * Layout
-   * ======================================================================== */
+   * Depth
+   * ================================================================x======== */
 
-  --max-content-width: 1024px;
-  --height-header: 64px;
-  --height-footer: 240px;
-  --height-footer-tablet: 160px;
-  --padding-bottom-layout: 50px;
-  --padding-bottom-layout-mobile: 50px;
-
-  /*
-   * Media queries breakpoints
-   * ======================================================================== */
-
-  --screen-xs-min: 480px; /* Extra small screen / phone */
-  --screen-sm-min: 768px; /* Small screen / tablet */
-  --screen-md-min: 992px; /* Medium screen / desktop */
-  --screen-lg-min: 1200px; /* Large screen / wide desktop */
+  /* Popover template */
+  --popover-shadow: 0 2px 16px 0 rgba(0, 0, 0, 0.05),
+    0 3px 4px 0 rgba(0, 0, 0, 0.08);
+  --popover-border: 1px solid var(--neutral-20);
+  --popover-rounding: 10px;
+  --navbar-shadow: 0 9px 12px -10px rgb(33 33 38 / 10%);
 
   /*
-   * Colors
+   * Colours
    * ======================================================================== */
 
-  /* 2020 update */
+  /* Core */
+  --primary-100: #1e2ff1;
+  --primary-10: #f3f6fc;
+  --primary-20: #e7edf9;
+  --primary-40: #adb4fa;
+  --primary-100-hover: #0515d4;
+  --neutral-0: #fff;
+  --neutral-10: #f7f7f7;
+  --neutral-20: #eaeaeb;
+  --neutral-30: #d8d8d9;
+  --neutral-40: #ceced0;
+  --neutral-60: #b1b1b4;
+  --neutral-70: #919195;
+  --neutral-80: #707075;
+  --neutral-90: #464649;
+  --neutral-100: #0a0a0b;
+  --brand: #000840;
 
-  /* The Org brand colors */
-  --org-darkblue: #1a2b42;
-  --org-teal: #4499bf;
-  --org-teal-darken: color(var(--org-teal) l(45%) s(45%));
-  --org-teal-lighten: color(var(--org-teal) l(95%) s(80%));
+  /* Landingpage themes */
+  --accent-100: #dcf2f3;
+  --orgChartLandingColor: #dcf2f3;
+  --jobsLandingColor: #dcf2f3;
+  --wiresLandingColor: #dcf2f3;
+  --scoutLandingColor: var(--primary-10);
 
-  /* Neutral colors */
-  --background-grey: #f8f7f8;
-  --light-grey: #ebebeb;
-  --medium-grey: #b1b1b1;
-  --dark-grey: #767676;
+  /* Utilities */
+  --error: #f6354d;
+  --warning: #ffb818;
+  --success: #009378;
 
-  /* Utility colors */
-  --black: #000;
-  --white: #fff;
-  --warning-red: #de1830;
-  --warning-yellow: #ffb818;
+  /*
+   * Depth
+   * ======================================================================== */
 
-  /* Depth */
+  /* Card shadow */
   --card-box-shadow: 0 0 1px rgba(0, 0, 0, 0.04), 0 4px 8px rgba(0, 0, 0, 0.04),
     0 8px 16px rgba(0, 0, 0, 0.04), 0 16px 24px rgba(0, 0, 0, 0.04);
+  --elevation-1: 0 1px 3px rgba(0, 0, 0, 0.07);
 
   /*
    * Animations
    * ======================================================================== */
   --transition-01: cubic-bezier(0.19, 1, 0.22, 1);
+
+  /*
+   * Layout
+   * ======================================================================== */
+
+  /* Spacing scale */
+  --sp-0: 0;
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 16px;
+  --sp-3-5: 20px;
+  --sp-4: 24px;
+  --sp-5: 32px;
+  --sp-6: 40px;
+  --sp-6-5: 48px;
+  --sp-7: 56px;
+  --sp-8: 72px;
+  --sp-9: 104px;
+  --max-content-width: 1136px;
+  --height-header: 64px;
+  --height-breadcrumbs: 56px;
+  --height-footer: 240px;
+  --height-footer-tablet: 190px;
+  --padding-bottom-layout: 50px;
+  --padding-bottom-layout-mobile: 50px;
+  --sectionSpacer: 100px;
+
+  /* Media query breakpoints */
+  --screen-xs-min: 480px; /* Extra small screen / phone */
+  --screen-sm-min: 768px; /* Small screen / tablet */
+  --screen-md-min: 992px; /* Medium screen / desktop */
+  --screen-lg-min: 1200px; /* Large screen / wide desktop */
+
+  /* Image formats */
+  --wire-aspect-ratio: 1.91 / 1;
 
   @custom-media --small-phone (width <= 374px);
   @custom-media --phone (374px < width <= 480px);
@@ -70,13 +139,15 @@
   @custom-media --lt-desktop (width < 992px);
   @custom-media --lt-wide-desktop (width < 1200px);
 
+  @custom-media --phone-and-up (width >= 480px);
   @custom-media --tablet-and-up (width >= 768px);
   @custom-media --desktop-and-up (width >= 992px);
   @custom-media --desktop-lg-and-up (width >= 1200px);
 
   @custom-media --bp-xs-phone (width < 374px);
   @custom-media --bp-phone (width < 768px);
-  @custom-media --lg-phone (480px < width <= 768px);
+  @custom-media --lg-phone (480px <= width <= 768px);
+  @custom-media --bp-lg-phone (width >= 375px);
   @custom-media --bp-tablet (width >= 768px);
   @custom-media --bp-desktop (width > 992px);
   @custom-media --bp-desktop-lg (width > 1200px);

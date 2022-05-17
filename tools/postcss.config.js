@@ -1,4 +1,4 @@
-/* eslint-disable global-require */
+/* eslint-disable global-require, @typescript-eslint/no-var-requires */
 
 module.exports = () => ({
   // The list of plugins for PostCSS
@@ -9,7 +9,9 @@ module.exports = () => ({
     require('postcss-import')(),
     // W3C variables, e.g. :root { --color: red; } div { background: var(--color); }
     // https://github.com/postcss/postcss-custom-properties
-    require('postcss-custom-properties')(),
+    require('postcss-custom-properties')({
+      warnings: false,
+    }),
     // W3C CSS Custom Media Queries, e.g. @custom-media --small-viewport (max-width: 30em);
     // https://github.com/postcss/postcss-custom-media
     require('postcss-custom-media')(),

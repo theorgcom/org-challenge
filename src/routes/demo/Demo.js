@@ -1,22 +1,18 @@
-/* @flow */
 import * as React from 'react';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import styled from 'styled-components';
+import { getSpacingPreset } from '@app/styles/theme/spacing';
 
-import s from './Demo.css';
-import type { Brand } from './assets/brand-data';
+const Wrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  padding-top: ${getSpacingPreset('height-header')};
+  min-height: calc(100vh - ${getSpacingPreset('height-header')});
+`;
 
-type Props = {
-  brands: Array<Brand>,
-  brandsLoading: boolean,
-};
-
-const Demo = (
-  { brands, brandsLoading }: Props, // eslint-disable-line
-) => (
-  /* console.log('This is the data from the brands "service"',brands); */
-  <div className={s.wrapper}>
+const Demo = () => (
+  <Wrapper>
     <section>{/* ... */}</section>
-  </div>
+  </Wrapper>
 );
 
-export default withStyles(s)(Demo);
+export default Demo;

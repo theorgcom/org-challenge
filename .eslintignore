@@ -3,3 +3,6 @@ node_modules/
 
 # Compiled output
 build
+
+# Auto generated types
+/src/apollo/types.ts

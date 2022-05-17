@@ -1,10 +1,16 @@
 import path from 'path';
+import fs from 'fs';
 import express from 'express';
 import browserSync from 'browser-sync';
 import webpack from 'webpack';
+import { ApolloServer } from 'apollo-server-express';
+
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import createLaunchEditorMiddleware from 'react-error-overlay/middleware';
+import typeDefs from './server/typeDefs';
+import resolvers from './server/resolvers';
+
 import webpackConfig from './webpack.config';
 import run, { format } from './run';
 import clean from './clean';
@@ -59,6 +65,20 @@ async function start() {
   server = express();
   server.use(createLaunchEditorMiddleware());
   server.use(express.static(path.resolve(__dirname, '../public')));
+
+
+  // Load the graphql endpoint on top
+  const apollo = new ApolloServer({
+    typeDefs,
+    resolvers,
+    csrfPrevention: true,
+  });
+
+  await apollo.start();
+
+  server.use(
+    apollo.getMiddleware()
+  );
 
   // Configure client-side hot module replacement
   const clientConfig = webpackConfig.find(config => config.name === 'client');
@@ -184,7 +204,7 @@ async function start() {
         if (['abort', 'fail'].includes(app.hot.status())) {
           console.warn(`${hmrPrefix}Cannot apply update.`);
           delete require.cache[require.resolve('../build/server')];
-          // eslint-disable-next-line global-require, import/no-unresolved
+          // eslint-disable-next-line global-require, import/no-unresolved, import/extensions, @typescript-eslint/no-var-requires
           app = require('../build/server').default;
           console.warn(`${hmrPrefix}App has been reloaded.`);
         } else {
@@ -212,22 +232,36 @@ async function start() {
   console.info(`[${format(timeStart)}] Launching server...`);
 
   // Load compiled src/server.js as a middleware
-  // eslint-disable-next-line global-require, import/no-unresolved
+  // eslint-disable-next-line global-require, import/no-unresolved, import/extensions,  @typescript-eslint/no-var-requires
   app = require('../build/server').default;
   appPromiseIsResolved = true;
   appPromiseResolve();
 
   // Launch the development server with Browsersync and HMR
+
+  const certificatesExit =
+    fs.existsSync('./server.key') && fs.existsSync('./server.crt');
+
   await new Promise((resolve, reject) =>
     browserSync.create().init(
       {
         // https://www.browsersync.io/docs/options
-        server: 'src/server.js',
+        server: 'src/server.tsx',
         middleware: [server],
         open: !process.argv.includes('--silent'),
         ...(isDebug
-          ? { ghostMode: false }
+          ? {
+              ghostMode: false,
+            }
           : { notify: false, ui: false, ghostMode: false }),
+        ...(isDebug && certificatesExit
+          ? {
+              https: {
+                key: './server.key',
+                cert: './server.crt',
+              },
+            }
+          : {}),
       },
       (error, bs) => (error ? reject(error) : resolve(bs)),
     ),

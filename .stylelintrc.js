@@ -39,11 +39,14 @@ module.exports = {
 
     // https://github.com/hudochenkov/stylelint-order/blob/master/rules/order/README.md
     'order/order': [
-      'custom-properties',
-      'dollar-variables',
-      'declarations',
-      'at-rules',
-      'rules',
+      [
+        'custom-properties',
+        'dollar-variables',
+        'declarations',
+        'at-rules',
+        'rules',
+      ],
+      { disableFix: true },
     ],
 
     // https://github.com/hudochenkov/stylelint-order/blob/master/rules/properties-order/README.md

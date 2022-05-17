@@ -2,6 +2,7 @@ import run from './run';
 import clean from './clean';
 import copy from './copy';
 import bundle from './bundle';
+// import zipLambda from './zipLambda';
 
 /**
  * Compiles the project from source files into a distributable
