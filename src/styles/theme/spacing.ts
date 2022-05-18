@@ -7,6 +7,7 @@ enum Spacing {
   'height-footer-tablet' = 190,
   'padding-bottom-layout' = 50,
   'section-spacer' = 100,
+  'sp-4' = 24,
 }
 
 export const getSpacingPreset = (spaceing: keyof typeof Spacing): string =>
