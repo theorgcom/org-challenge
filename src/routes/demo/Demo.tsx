@@ -1,6 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { getSpacingPreset } from '@app/styles/theme/spacing';
+import { FC } from 'react';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -9,7 +10,7 @@ const Wrapper = styled.div`
   min-height: calc(100vh - ${getSpacingPreset('height-header')});
 `;
 
-const Demo = () => (
+const Demo: FC = () => (
   <Wrapper>
     <section>{/* ... */}</section>
   </Wrapper>
