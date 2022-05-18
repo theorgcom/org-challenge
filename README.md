@@ -38,7 +38,7 @@ This will ensure that there are no javascript or css errors in the project.
 
 #### 5. Submit your work
 
-Remove the `./node_modules` and `./build` files if present and send the project as a zip file or make a public repository oin github and invite us as contributors.
+Remove the `./node_modules` and `./build` files if present and send the project as a zip file or make a public repository on github and invite us as contributors.
 
 ## Any questions or problems
 
