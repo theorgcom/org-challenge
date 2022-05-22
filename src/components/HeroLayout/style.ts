@@ -6,6 +6,7 @@ import MaxWidthContainer from '../MaxWidthContainer/MaxWidthContainer';
 export const HeroSection = styled(MaxWidthContainer)`
   display: flex;
   flex-direction: column-reverse;
+  align-items: center;
   padding-top: 46px;
   padding-bottom: 40px;
   ${media.sm`
@@ -14,9 +15,10 @@ export const HeroSection = styled(MaxWidthContainer)`
   `}
 
   ${media.md`
-  padding-top: 112px;
-  padding-bottom: 115px;
-  flex-direction: row;
-  justify-content: space-between
-`}
+    padding-top: 112px;
+    padding-bottom: 115px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  `}
 `;
