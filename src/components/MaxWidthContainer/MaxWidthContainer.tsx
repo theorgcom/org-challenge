@@ -5,7 +5,7 @@ import { getSpacingPreset } from '@app/styles/theme/spacing';
 import styled from 'styled-components';
 
 export default styled.div`
-  padding: 0 45px;
+  padding: 0 24px;
   margin: 0 auto;
   max-width: ${getSpacingPreset('max-content-width')};
   box-sizing: content-box;
@@ -14,7 +14,7 @@ export default styled.div`
     padding: 0 20px;
   `}
   ${media.sm`
-    padding: 0 20px;
+    padding: 0 32px;
   `}
 
   > * {
