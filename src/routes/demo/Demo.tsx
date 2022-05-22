@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { getSpacingPreset } from '@app/styles/theme/spacing';
 import { FC } from 'react';
 import HeroLayout from '@app/components/HeroLayout/HeroLayout';
+import HeroIntro from '@app/components/HeroIntro/HeroIntro';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -13,7 +14,7 @@ const Wrapper = styled.div`
 
 const Demo: FC = () => (
   <Wrapper>
-    <HeroLayout leftSection={<div>left</div>} rightSection={<div>right</div>} />
+    <HeroLayout leftSection={<HeroIntro />} rightSection={<div>right</div>} />
   </Wrapper>
 );
 
