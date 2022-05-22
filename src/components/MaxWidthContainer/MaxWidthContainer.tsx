@@ -1,8 +1,7 @@
-import * as React from 'react';
+import styled from 'styled-components';
 
 import { media } from '@app/styles/media';
 import { getSpacingPreset } from '@app/styles/theme/spacing';
-import styled from 'styled-components';
 
 export default styled.div`
   padding: 0 45px;
